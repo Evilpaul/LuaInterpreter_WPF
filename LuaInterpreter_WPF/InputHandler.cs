@@ -4,13 +4,10 @@ using System.IO;
 
 namespace LuaInterpreter_WPF
 {
-    public class InputHandler : INotifyPropertyChanged
+    public class InputHandler : ObservableObject
     {
         private static volatile InputHandler instance;
         private static object syncRoot = new object();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string status) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(status));
 
         private InputHandler()
         {

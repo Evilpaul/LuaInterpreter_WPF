@@ -3,13 +3,10 @@ using System.ComponentModel;
 
 namespace LuaInterpreter_WPF
 {
-    class Timeout : INotifyPropertyChanged, IDataErrorInfo
+    class Timeout : ObservableObject, IDataErrorInfo
     {
         private static volatile Timeout instance;
         private static object syncRoot = new object();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string status) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(status));
 
         private Timeout()
         {
