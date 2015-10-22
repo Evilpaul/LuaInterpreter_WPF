@@ -9,15 +9,21 @@ namespace LuaInterpreter_WPF
     public class Logger
     {
         private static volatile Logger instance;
-        private static object syncRoot = new Object();
+        private static object syncRoot = new object();
 
         public class LogItem
         {
-            public string Message { get; set; }
-            public Brush MessageColor { get; set; }
+            public string Message { get; }
+            public Brush MessageColor { get; }
+
+            public LogItem(string message, Brush color)
+            {
+                Message = message;
+                MessageColor = color;
+            }
         }
 
-        public ObservableCollection<LogItem> logList { get; set; }
+        public ObservableCollection<LogItem> logList { get; }
 
         private void AddItem(LogItem li)
         {
@@ -49,50 +55,13 @@ namespace LuaInterpreter_WPF
             }
         }
 
-        public void ClearLog()
-        {
-            logList.Clear();
-        }
+        public void ClearLog() => logList.Clear();
 
-        public void LogInfo(string info)
-        {
-            LogItem li = new LogItem();
-            li.Message = info;
-            li.MessageColor = Brushes.Black;
-            AddItem(li);
-        }
-
-        public void LogExecutionInfo(long ticks, string info)
-        {
-            LogItem li = new LogItem();
-            li.Message = ticks + " | " + info;
-            li.MessageColor = Brushes.Gray;
-            AddItem(li);
-        }
-
-        public void LogExecutionResult(string info)
-        {
-            LogItem li = new LogItem();
-            li.Message = "Return value : " + info;
-            li.MessageColor = Brushes.Green;
-            AddItem(li);
-        }
-
-        public void LogError(string error)
-        {
-            LogItem li = new LogItem();
-            li.Message = "ERROR | " + error;
-            li.MessageColor = Brushes.Red;
-            AddItem(li);
-        }
-
-        public void LogWarning(string warning)
-        {
-            LogItem li = new LogItem();
-            li.Message = "WARNING | " + warning;
-            li.MessageColor = Brushes.Orange;
-            AddItem(li);
-        }
+        public void LogInfo(string info) => AddItem(new LogItem(info, Brushes.Black));
+        public void LogExecutionInfo(long ticks, string info) => AddItem(new LogItem($"{ticks} | {info}", Brushes.Gray));
+        public void LogExecutionResult(string info) => AddItem(new LogItem($"Return value : {info}", Brushes.Green));
+        public void LogError(string error) => AddItem(new LogItem($"ERROR | {error}", Brushes.Red));
+        public void LogWarning(string warning) => AddItem(new LogItem($"WARNING | {warning}", Brushes.Orange));
 
         public async void SaveLog(string filePath)
         {
@@ -110,7 +79,7 @@ namespace LuaInterpreter_WPF
             }
             catch (Exception ex)
             {
-                LogError("Saving Log : " + ex.Message);
+                LogError($"Saving Log : {ex.Message}");
             }
         }
     }

@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Windows.Media;
 
 namespace LuaInterpreter_WPF
 {
     public class InputHandler : INotifyPropertyChanged
     {
         private static volatile InputHandler instance;
-        private static object syncRoot = new Object();
+        private static object syncRoot = new object();
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string status) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(status));
 
         private InputHandler()
         {
@@ -35,16 +33,6 @@ namespace LuaInterpreter_WPF
             }
         }
 
-        // This method is called by the Set accessor of each property.
-        // The CallerMemberName attribute that is applied to the optional propertyName
-        // parameter causes the property name of the caller to be substituted as an argument.
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
         private string _Text;
         public string Text
@@ -58,7 +46,7 @@ namespace LuaInterpreter_WPF
                 if (value != _Text)
                 {
                     _Text = value;
-                    NotifyPropertyChanged();
+                    OnPropertyChanged(nameof(Text));
                 }
             }
         }

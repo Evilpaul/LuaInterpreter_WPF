@@ -20,8 +20,8 @@ namespace LuaInterpreter_WPF
 				Logger.Instance.LogExecutionInfo(sw.ElapsedTicks, s);
 			};
 
-            Logger.Instance.LogInfo("MoonSharp " + Script.VERSION);
-            Logger.Instance.LogInfo("Lua " + Script.LUA_VERSION);
+            Logger.Instance.LogInfo($"MoonSharp {Script.VERSION}");
+            Logger.Instance.LogInfo($"Lua {Script.LUA_VERSION}");
         }
 
 		public async void doScript()
@@ -50,20 +50,20 @@ namespace LuaInterpreter_WPF
 					sw.Restart();
 					DynValue res = Script.RunString(code);
 					if (res.Type != DataType.Void)
-                        Logger.Instance.LogExecutionResult("Return value : " + res.ToString());
+                        Logger.Instance.LogExecutionResult(res.ToString());
 				}
 				catch (InterpreterException ex)
 				{
-                    Logger.Instance.LogWarning("Interpreter exception : " +  ex.DecoratedMessage);
+                    Logger.Instance.LogWarning($"Interpreter exception : {ex.DecoratedMessage}");
 				}
 				catch (Exception ex)
 				{
-                    Logger.Instance.LogWarning("Execution exception : " + ex.Message);
+                    Logger.Instance.LogWarning($"Execution exception : {ex.Message}");
 				}
 				finally
 				{
 					sw.Stop();
-                    Logger.Instance.LogInfo("Script completed in : " + sw.ElapsedMilliseconds + "ms");
+                    Logger.Instance.LogInfo($"Script completed in : {sw.ElapsedMilliseconds}ms");
 				}
 			});
 		}
