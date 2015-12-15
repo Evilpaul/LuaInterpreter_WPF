@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 
 namespace LuaInterpreter_WPF
@@ -29,7 +28,6 @@ namespace LuaInterpreter_WPF
                 return instance;
             }
         }
-
 
         private string _Text;
         public string Text
