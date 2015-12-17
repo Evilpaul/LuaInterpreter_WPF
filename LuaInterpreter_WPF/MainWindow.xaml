@@ -47,7 +47,7 @@
                         <TextBlock Text="{Binding Message}" Foreground="{Binding MessageColor}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-                </ListBox>
+            </ListBox>
         </GroupBox>
     </Grid>
 </Window>
